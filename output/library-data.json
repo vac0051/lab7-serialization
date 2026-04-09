@@ -1,0 +1,69 @@
+﻿{
+  "authors": [
+    {
+      "id": 1,
+      "name": "Isaac Asimov"
+    },
+    {
+      "id": 2,
+      "name": "J.R.R. Tolkien"
+    },
+    {
+      "id": 3,
+      "name": "George Orwell"
+    }
+  ],
+  "genres": [
+    {
+      "id": 1,
+      "name": "Sci-Fi"
+    },
+    {
+      "id": 2,
+      "name": "Fantasy"
+    },
+    {
+      "id": 3,
+      "name": "Drama"
+    }
+  ],
+  "books": [
+    {
+      "id": 1,
+      "title": "Foundation",
+      "publicationYear": 1951,
+      "authorId": 1,
+      "genreIds": [
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "title": "The Hobbit",
+      "publicationYear": 1937,
+      "authorId": 2,
+      "genreIds": [
+        2
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Animal Farm",
+      "publicationYear": 1945,
+      "authorId": 3,
+      "genreIds": [
+        3
+      ]
+    },
+    {
+      "id": 4,
+      "title": "The Lord of the Rings",
+      "publicationYear": 1954,
+      "authorId": 2,
+      "genreIds": [
+        2,
+        3
+      ]
+    }
+  ]
+}

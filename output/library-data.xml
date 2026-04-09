@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<library xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <authors>
+    <author id="1">
+      <name>Isaac Asimov</name>
+    </author>
+    <author id="2">
+      <name>J.R.R. Tolkien</name>
+    </author>
+    <author id="3">
+      <name>George Orwell</name>
+    </author>
+  </authors>
+  <genres>
+    <genre id="1">
+      <name>Sci-Fi</name>
+    </genre>
+    <genre id="2">
+      <name>Fantasy</name>
+    </genre>
+    <genre id="3">
+      <name>Drama</name>
+    </genre>
+  </genres>
+  <books>
+    <book id="1">
+      <title>Foundation</title>
+      <publicationYear>1951</publicationYear>
+      <authorId>1</authorId>
+      <genreIds>
+        <genreId>1</genreId>
+      </genreIds>
+    </book>
+    <book id="2">
+      <title>The Hobbit</title>
+      <publicationYear>1937</publicationYear>
+      <authorId>2</authorId>
+      <genreIds>
+        <genreId>2</genreId>
+      </genreIds>
+    </book>
+    <book id="3">
+      <title>Animal Farm</title>
+      <publicationYear>1945</publicationYear>
+      <authorId>3</authorId>
+      <genreIds>
+        <genreId>3</genreId>
+      </genreIds>
+    </book>
+    <book id="4">
+      <title>The Lord of the Rings</title>
+      <publicationYear>1954</publicationYear>
+      <authorId>2</authorId>
+      <genreIds>
+        <genreId>2</genreId>
+        <genreId>3</genreId>
+      </genreIds>
+    </book>
+  </books>
+</library>
