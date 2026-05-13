@@ -1,4 +1,4 @@
-п»їusing System.Text;
+using System.Text;
 using System.Text.Json;
 using System.Xml.Serialization;
 
@@ -10,39 +10,80 @@ Directory.CreateDirectory(outputDirectory);
 
 var sourceData = DemoDataFactory.Create();
 
-SerializerService.ExportJson(jsonPath, sourceData);
-SerializerService.ExportXml(xmlPath, sourceData);
-
-var fromJson = SerializerService.ImportJson(jsonPath);
-var fromXml = SerializerService.ImportXml(xmlPath);
-
-var jsonFileSize = new FileInfo(jsonPath).Length;
-var xmlFileSize = new FileInfo(xmlPath).Length;
-
 Console.OutputEncoding = Encoding.UTF8;
-Console.WriteLine("Р›Р 7: РЎРµСЂРёР°Р»РёР·Р°С†РёСЏ Рё РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёСЏ\n");
+Console.WriteLine("ЛР7: Сериализация и десериализация");
 
-Console.WriteLine($"JSON СЌРєСЃРїРѕСЂС‚РёСЂРѕРІР°РЅ: {Path.GetFullPath(jsonPath)}");
-Console.WriteLine($"XML СЌРєСЃРїРѕСЂС‚РёСЂРѕРІР°РЅ:  {Path.GetFullPath(xmlPath)}\n");
-
-Console.WriteLine($"JSON: РєРЅРёРі {fromJson.Books.Count}, Р°РІС‚РѕСЂРѕРІ {fromJson.Authors.Count}, Р¶Р°РЅСЂРѕРІ {fromJson.Genres.Count}");
-Console.WriteLine($"XML:  РєРЅРёРі {fromXml.Books.Count}, Р°РІС‚РѕСЂРѕРІ {fromXml.Authors.Count}, Р¶Р°РЅСЂРѕРІ {fromXml.Genres.Count}\n");
-
-Console.WriteLine("РЎСЂР°РІРЅРµРЅРёРµ СЂР°Р·РјРµСЂРѕРІ:");
-Console.WriteLine($"- JSON: {jsonFileSize} bytes");
-Console.WriteLine($"- XML:  {xmlFileSize} bytes");
-
-if (jsonFileSize < xmlFileSize)
+while (true)
 {
-    Console.WriteLine("Р’С‹РІРѕРґ: JSON РєРѕРјРїР°РєС‚РЅРµРµ РґР»СЏ СЌС‚РѕРіРѕ РЅР°Р±РѕСЂР° РґР°РЅРЅС‹С….");
-}
-else if (jsonFileSize > xmlFileSize)
-{
-    Console.WriteLine("Р’С‹РІРѕРґ: XML РєРѕРјРїР°РєС‚РЅРµРµ РґР»СЏ СЌС‚РѕРіРѕ РЅР°Р±РѕСЂР° РґР°РЅРЅС‹С….");
-}
-else
-{
-    Console.WriteLine("Р’С‹РІРѕРґ: СЂР°Р·РјРµСЂС‹ JSON Рё XML СЃРѕРІРїР°Р»Рё.");
+    Console.WriteLine("\n--- МЕНЮ ---");
+    Console.WriteLine("1. Сериализовать (сохранить) в JSON");
+    Console.WriteLine("2. Сериализовать (сохранить) в XML");
+    Console.WriteLine("3. Десериализовать (прочитать) из JSON");
+    Console.WriteLine("4. Десериализовать (прочитать) из XML");
+    Console.WriteLine("5. Сравнить размеры файлов");
+    Console.WriteLine("0. Выход");
+    Console.Write("Выберите действие: ");
+
+    var choice = Console.ReadLine();
+    if (choice == "0") break;
+
+    switch (choice)
+    {
+        case "1":
+            SerializerService.ExportJson(jsonPath, sourceData);
+            Console.WriteLine($"[Успех] Данные сохранены в {Path.GetFullPath(jsonPath)}");
+            break;
+        case "2":
+            SerializerService.ExportXml(xmlPath, sourceData);
+            Console.WriteLine($"[Успех] Данные сохранены в {Path.GetFullPath(xmlPath)}");
+            break;
+        case "3":
+            if (File.Exists(jsonPath))
+            {
+                var fromJson = SerializerService.ImportJson(jsonPath);
+                Console.WriteLine($"[Прочитано JSON] Книг: {fromJson.Books.Count}, Авторов: {fromJson.Authors.Count}, Жанров: {fromJson.Genres.Count}");
+            }
+            else
+            {
+                Console.WriteLine("[Ошибка] Файл JSON не найден. Сначала сохраните данные.");
+            }
+            break;
+        case "4":
+            if (File.Exists(xmlPath))
+            {
+                var fromXml = SerializerService.ImportXml(xmlPath);
+                Console.WriteLine($"[Прочитано XML] Книг: {fromXml.Books.Count}, Авторов: {fromXml.Authors.Count}, Жанров: {fromXml.Genres.Count}");
+            }
+            else
+            {
+                Console.WriteLine("[Ошибка] Файл XML не найден. Сначала сохраните данные.");
+            }
+            break;
+        case "5":
+            if (File.Exists(jsonPath) && File.Exists(xmlPath))
+            {
+                var jsonFileSize = new FileInfo(jsonPath).Length;
+                var xmlFileSize = new FileInfo(xmlPath).Length;
+
+                Console.WriteLine($"- JSON: {jsonFileSize} bytes");
+                Console.WriteLine($"- XML:  {xmlFileSize} bytes");
+
+                if (jsonFileSize < xmlFileSize)
+                    Console.WriteLine("Вывод: JSON компактнее для этого набора данных.");
+                else if (jsonFileSize > xmlFileSize)
+                    Console.WriteLine("Вывод: XML компактнее для этого набора данных.");
+                else
+                    Console.WriteLine("Вывод: размеры JSON и XML совпали.");
+            }
+            else
+            {
+                Console.WriteLine("[Ошибка] Для сравнения размеров оба файла (JSON и XML) должны быть созданы (пункты 1 и 2).");
+            }
+            break;
+        default:
+            Console.WriteLine("[Ошибка] Неизвестная команда.");
+            break;
+    }
 }
 
 public static class SerializerService
